@@ -2,6 +2,7 @@ import React from 'react'
 import {Image, TouchableOpacity, Dimensions} from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons";
 import {View} from "react-native";
+
 const deviceWidth = Dimensions.get("window").width;
 
 export class Logo extends React.Component {
@@ -15,8 +16,7 @@ export class Logo extends React.Component {
                 source={require('../../assets/slike.jpg')}
                 resizeMode = "contain"
                 style = { {
-                    width: 140,
-                    marginTop: 15,
+                    width: parseInt(deviceWidth * .1),
                     alignSelf:'center'
                 } }
             />
