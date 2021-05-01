@@ -47,19 +47,13 @@ export default function ImagesScreen() {
                 </TouchableWithoutFeedback>
                 <View style={styles.images}>
                     <View>
-                        {images.left.map((image, index) =>
-                            <ImageComponent image={image} key={index} size={second} />
-                        )}
+                        {images.left.map((img, idx) => <ImageComponent image={img} key={idx} size={second} />)}
                     </View>
                     <View>
-                        {images.center.map((image, index) =>
-                            <ImageComponent image={image} key={index} size={first} />
-                        )}
+                        {images.center.map((img, idx) => <ImageComponent image={img} key={idx} size={first} />)}
                     </View>
                     <View>
-                        {images.right.map((image, index) =>
-                            <ImageComponent image={image} key={index} size={second} />
-                        )}
+                        {images.right.map((img, idx) => <ImageComponent image={img} key={idx} size={second} />)}
                     </View>
                 </View>
             </View>
