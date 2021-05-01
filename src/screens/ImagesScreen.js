@@ -29,19 +29,12 @@ export default function ImagesScreen() {
     const pick = async _ => {
         openImagePickerAsync().then((image) => {
             // set images
-            setImages((prev) => {
-                if (prev.column === 'right') { return { ...prev, column: 'left', left: [...prev.left, image] }}
-                else if (
-                    (prev.column === 'left'
-                    && (prev.left.length + prev.center.length + prev.right.length + 1) % 7 !== 2)
-                    || prev.column === 'center'
-                ) { return { ...prev, column: 'right', right: [...prev.right, image] } }
-                return { ...prev, column: 'center', center: [...prev.center, image] }
+            setImages((prevImg) => {
+                if (prevImg.column === 'right') { return { ...prevImg, column: 'left', left: [...prevImg.left, image] }}
+                else if ((prevImg.column === 'left' && (prevImg.left.length + prevImg.center.length + prevImg.right.length + 1) % 7 !== 2) || prevImg.column === 'center') { return { ...prevImg, column: 'right', right: [...prevImg.right, image] } }
+                return { ...prevImg, column: 'center', center: [...prevImg.center, image] }
             })
-        }).catch(() =>
-            Alert.alert('Error', 'Failed to load image',
-                [{text: 'Ok'}, ])
-        )
+        }).catch(() => console.log("Alert"))
     }
 
     return (

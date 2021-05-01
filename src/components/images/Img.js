@@ -8,17 +8,12 @@ export const ImageComponent = ({ image, size }) => {
             {
                 image !== null ?
                     image.width >= image.height ? (
-                        <AutoHeightImage
-                            source={{ uri: image.localUri }}
-                            width={size - 2} // -2  - because 2px for borders
-                        />
-                    ) : (
-                        <ImageItem
-                            source={{ uri: image.localUri }}
-                            style={styles.verticalImage(size)}
-                            resizeMode="contain"
-                        />
-                    ) : null
+                        <AutoHeightImage source={{ uri: image.localUri }} width={size - 2}/>
+                    ) :
+                        (
+                        <ImageItem source={{ uri: image.localUri }} style={styles.verticalImage(size)} resizeMode="contain"/>
+                        ) :
+                    null
             }
         </View>
     )
