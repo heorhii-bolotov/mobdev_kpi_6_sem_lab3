@@ -4,7 +4,8 @@ import { createBottomTabNavigator } from "react-navigation";
 import {
   HomeNavigator,
   ProfileNavigator,
-  SearchNavigator
+  SearchNavigator,
+  ImagesNavigator
 } from "./screen-stack-navigators";
 
 const getTabBarIcon = (navigation, focused, tintColor) => {
@@ -17,6 +18,8 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
     iconName = "ios-contact";
   } else if (routeName === "Search") {
     iconName = "ios-search";
+  } else if (routeName === "Gallery") {
+    iconName = "images";
   }
 
   return <IconComponent name={iconName} size={25} color={tintColor} />;
@@ -26,7 +29,8 @@ const BottomTabNavigator = createBottomTabNavigator(
   {
     Home: HomeNavigator,
     Profile: ProfileNavigator,
-    Search: SearchNavigator
+    Search: SearchNavigator,
+    Gallery: ImagesNavigator
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({

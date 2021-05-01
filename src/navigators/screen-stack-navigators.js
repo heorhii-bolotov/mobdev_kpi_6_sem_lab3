@@ -6,6 +6,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import SearchScreen from "../screens/SearchScreen";
 import ChartScreen from "../screens/ChartScreen";
 import PieChartScreen from "../screens/PieChartScreen";
+import ImagesScreen from "../screens/ImagesScreen";
 
 //Add navigators with screens in this file
 export const HomeNavigator = createStackNavigator({
@@ -22,6 +23,10 @@ export const ProfileNavigator = createStackNavigator({
 
 export const SearchNavigator = createStackNavigator({
   Search: { screen: SearchScreen }
+});
+
+export const ImagesNavigator = createStackNavigator({
+  Gallery: { screen: ImagesScreen }
 });
 
 export const ChartNavigator = createStackNavigator({
