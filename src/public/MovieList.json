@@ -1,10 +1,5 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native"
-import { ScrollView } from "react-native-gesture-handler"
-import React, { Component } from "react"
-import { MenuButton, Logo } from "../components/header/header"
-
-const list = {
-  Search: [
+{
+  "Search": [
     {
       "Title": "Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout",
       "Year": "2020",
@@ -84,41 +79,3 @@ const list = {
     }
   ]
 }
-const { width } = Dimensions.get('window')
-import Movie from "../models/Movie"
-
-
-export default class SearchScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerLeft: <MenuButton onPress={() => navigation.openDrawer()} />,
-      headerTitle: <Logo />,
-      headerBackTitle: "Search",
-      headerLayoutPreset: "center"
-    }
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Authors list</Text>
-        <ScrollView>
-          {
-            list['Search'].map((m) => {
-              return new Movie(m).renderMoviePreview(Dimensions.get("window").width)
-            })
-          }
-        </ScrollView>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20
-  }
-});

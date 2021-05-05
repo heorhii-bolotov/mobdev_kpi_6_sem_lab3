@@ -1,26 +1,25 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
-import BookExports from "./MovieExports";
+import { StyleSheet, Text, View, Image, Dimensions } from "react-native"
+import MovieExports from "./MovieExports"
 
-const windowWidth = Dimensions.get("window").width;
+const windowWidth = Dimensions.get("window").width
 
-class Book {
-    constructor({ title, subtitle, isbn13, price, image, uri }) {
-        this.title = title;
-        this.subtitle = subtitle;
-        this.isbn13 = isbn13;
-        this.price = price;
-        this.image = image;
-        this.uri = uri;
+class Movie {
+    constructor({ Title, Year, imdbID, Type, Poster }) {
+        this.Title = Title
+        this.Year = Year
+        this.imdbID = imdbID
+        this.Type = Type
+        this.Poster = Poster
     }
-    findBookImage = () => {
-        if (this.image && BookExports[this.image.split(".png")[0]]) {
-            return BookExports[this.image.split(".png")[0]]
+    findMovieImage = () => {
+        if (this.Poster && MovieExports[this.Poster.split(".jpg")[0]]) {
+            return MovieExports[this.Poster.split(".jpg")[0]]
         } else {
             return false
         }
     }
-    renderBookPreview = windowWidth => {
+    renderMoviePreview = windowWidth => {
         const styles = StyleSheet.create({
             container: {
                 flex: 1,
@@ -46,16 +45,15 @@ class Book {
                 width: 60,
                 height: 60,
                 padding: 10,
-                // resizeMode: 'contain'
             },
         })
 
         return (
             <View style={styles.container}>
                 <View style={styles.col1}>
-                    {this.findBookImage() ? (
+                    {this.findMovieImage() ? (
                         <Image
-                            source={this.findBookImage()}
+                            source={this.findMovieImage()}
                             style={styles.images}
                             width="40"
                         />
@@ -65,10 +63,10 @@ class Book {
                 </View>
                 <View style={styles.col2}>
                     <View>
-                        <Text>{this.title}</Text>
-                        <Text>{this.subtitle}</Text>
-                        <Text>{this.isbn13}</Text>
-                        <Text>{this.price}</Text>
+                        <Text>{this.Title}</Text>
+                        <Text>{this.Year}</Text>
+                        <Text>{this.imdbID}</Text>
+                        <Text>{this.Type}</Text>
                     </View>
                 </View>
             </View>
@@ -76,4 +74,4 @@ class Book {
     }
 }
 
-export default Book
+export default Movie

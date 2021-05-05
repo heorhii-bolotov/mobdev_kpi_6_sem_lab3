@@ -15,7 +15,8 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Hello! Welcome to my homepage</Text>
+        <Text>Heorhii Bolotov</Text>
+        <Text>IB-8105</Text>
       </View>
     );
   }
