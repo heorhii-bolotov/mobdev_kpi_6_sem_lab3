@@ -15,7 +15,7 @@ export class Logo extends React.Component {
                 source={require('../../assets/slike.jpg')}
                 resizeMode = "contain"
                 style = { {
-                    width: 140,
+                    width: 30,
                     marginTop: 15,
                     alignSelf:'center'
                 } }
