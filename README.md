@@ -5,4 +5,4 @@
 
 Болотов Георгій
 
-![](https://github.com/heorhii-bolotov/mobdev_kpi_6_sem_lab3/blob/lab5/img.png)
+[Full video link](https://drive.google.com/file/d/1rO5A6HxDrtumzKZqJ13D91AZEAJL5lw-/view?usp=sharing)
