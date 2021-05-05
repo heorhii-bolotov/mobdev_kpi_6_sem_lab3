@@ -1,27 +1,25 @@
-import React from "react"
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from "react-native"
-import BookExports from "./MovieExports"
-import {TouchableWithoutFeedback, Swipeable, ScrollView} from "react-native-gesture-handler"
+import React from "react";
+import {StyleSheet, Text, View, Image, Dimensions, TouchableOpacity} from "react-native"
+import MovieExports from "./MovieExports"
+import {TouchableWithoutFeedback} from "react-native-gesture-handler";
 
-const { width } = Dimensions.get("window")
+const windowWidth = Dimensions.get("window").width
 
-class Book {
-    constructor({ title, subtitle, isbn13, price, image, uri }) {
-        this.title = title
-        this.subtitle = subtitle
-        this.isbn13 = isbn13
-        this.price = price
-        this.image = image
-        this.uri = uri
+class Movie {
+    constructor({ Title, Year, imdbID, Type, Poster }) {
+        this.Title = Title
+        this.Year = Year
+        this.imdbID = imdbID
+        this.Type = Type
+        this.Poster = Poster
     }
-    findBookImage = () => {
-        if (this.image && BookExports[this.image.split(".png")[0]]) {
-            return BookExports[this.image.split(".png")[0]]
+    findMovieImage = () => {
+        if (this.Poster && MovieExports[this.Poster.split(".jpg")[0]]) {
+            return MovieExports[this.Poster.split(".jpg")[0]]
         } else {
             return false
         }
     }
-
     renderFullBook = (windowWidth) => {
         const styles = StyleSheet.create({
             container: {
@@ -45,26 +43,25 @@ class Book {
         })
         return (
             <View style={styles.container}>
-                    {this.findBookImage() ? (
-                        <Image
-                            source={this.findBookImage()}
-                            style={styles.images}
-                            width="40"
-                        />
-                    ) : (
-                        <View style={styles.images}></View>
-                    )}
-                    <View>
-                        <Text>{this.title}</Text>
-                        <Text>{this.subtitle}</Text>
-                        <Text>{this.isbn13}</Text>
-                        <Text>{this.price}</Text>
-                    </View>
+                {this.findMovieImage() ? (
+                    <Image
+                        source={this.findMovieImage()}
+                        style={styles.images}
+                        width="40"
+                    />
+                ) : (
+                    <View style={styles.images}></View>
+                )}
+                <View>
+                    <Text>{this.Title}</Text>
+                    <Text>{this.Year}</Text>
+                    <Text>{this.imdbID}</Text>
+                    <Text>{this.Type}</Text>
+                </View>
             </View>
         )
     }
-
-    renderBookPreview = (windowWidth, handleClickedBook, RightAction) => {
+    renderMoviePreview = (windowWidth, handleClickedBook, RightAction) => {
         const styles = StyleSheet.create({
             container: {
                 flex: 1,
@@ -99,23 +96,23 @@ class Book {
                 <View style={styles.container}>
                     <View style={styles.col1}>
                         <TouchableWithoutFeedback onPress={() => handleClickedBook(this)}>
-                            {this.findBookImage() ? (
-                                <Image
-                                    source={this.findBookImage()}
-                                    style={styles.images}
-                                    width="40"
-                                />
-                            ) : (
-                                <View style={styles.images}></View>
-                            )}
+                        {this.findMovieImage() ? (
+                            <Image
+                                source={this.findMovieImage()}
+                                style={styles.images}
+                                width="40"
+                            />
+                        ) : (
+                            <View style={styles.images}></View>
+                        )}
                         </TouchableWithoutFeedback>
                     </View>
                     <View style={styles.col2}>
                         <View>
-                            <Text>{this.title}</Text>
-                            <Text>{this.subtitle}</Text>
-                            <Text>{this.isbn13}</Text>
-                            <Text>{this.price}</Text>
+                            <Text>{this.Title}</Text>
+                            <Text>{this.Year}</Text>
+                            <Text>{this.imdbID}</Text>
+                            <Text>{this.Type}</Text>
                         </View>
                     </View>
                 </View>
@@ -124,4 +121,4 @@ class Book {
     }
 }
 
-export default Book
+export default Movie

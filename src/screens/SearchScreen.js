@@ -4,7 +4,7 @@ import React, { Component } from "react"
 import { MenuButton, Logo } from "../components/header/header"
 
 const { width } = Dimensions.get('window')
-import Book from "../models/Book";
+import Movie from "../models/Movie";
 
 
 export default class SearchScreen extends React.Component {
@@ -13,98 +13,87 @@ export default class SearchScreen extends React.Component {
     onAdd: false,
     filter: '',
     formTitle: '',
-    formSubtitle: '',
-    formPrice: '',
+    formType: '',
+    formYear: '',
     books: [
-        {
-          title: 'Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout',
-          subtitle: '',
-          isbn13: 'noid',
-          price: 'Priceless',
-          image: '',
-          uri: ''
-        },
-        {
-          title: 'iOS Components and Frameworks',
-          subtitle: 'Understanding the Advanced Features of the iOS SDK',
-          isbn13: '9780321856715',
-          price: '$23.30',
-          image: 'Image_01.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1LFrwYL7hFvuSoWJSJahcGxO9DBNrRlqo'
-        },
-        {
-          title: 'Learning iOS Development',
-          subtitle: 'A Hands-on Guide to the Fundamentals of iOS Programming',
-          isbn13: '9780321862969',
-          price: '$3.99',
-          image: 'Image_02.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1ePyPpLYvNsAeQASlcuUeMMqRODlDbu4L'
-        },
-        {
-          title: 'Beginning iOS Programming',
-          subtitle: 'Building and Deploying iOS Applications',
-          isbn13: '9781118841471',
-          price: '$6.35',
-          image: 'Image_03.png',
-          uri: 'https://drive.google.com/uc?export=download&id=16i-9TVnF73ovco-phKxBqCtfbtArUckg'
-        },
-        {
-          title: 'Beginning iOS 5 Development',
-          subtitle: 'Exploring the iOS SDK',
-          isbn13: '9781430236054',
-          price: '$3.65',
-          image: '',
-          uri: ''
-        },
-        {
-          title: 'Beginning iOS 5 Games Development',
-          subtitle: 'Using the iOS SDK for iPad, iPhone and iPod touch',
-          isbn13: '9781430237105',
-          price: '$36.31',
-          image: 'Image_05.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1WZ2egkXHNhhYIl7D2zuaZS1VwGrOV2xZ'
-        },
-        {
-          title: 'More iOS 6 Development',
-          subtitle: 'Further Explorations of the iOS SDK',
-          isbn13: '9781430238072',
-          price: '$4.95',
-          image: 'Image_06.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1U4B4USGcGDmPWJ0A3olQy7xtFRiYNeGx'
-        },
-        {
-          title: 'Beginning iOS 6 Development',
-          subtitle: 'Exploring the iOS SDK',
-          isbn13: '9781430245124',
-          price: '$5.34',
-          image: 'Image_07.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1AutN6Pr-7e6bQ57PBhbO5Sr16H14mJCB'
-        },
-        {
-          title: 'Beginning iOS 7 Development',
-          subtitle: 'Exploring the iOS SDK',
-          isbn13: '9781430260226',
-          price: '$3.65',
-          image: 'Image_08.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1xPeKO5xfRo2_LcYk3gmJzwoFbFUYCv2h'
-        },
-        {
-          title: 'Developing iOS Applications with Flex 4.5',
-          subtitle: '',
-          isbn13: '9781449308360',
-          price: '$12.99',
-          image: '',
-          uri: ''
-        },
-        {
-          title: 'iOS 6 Programming Cookbook',
-          subtitle: 'Solutions for iOS Developers',
-          isbn13: '9781449342753',
-          price: '$4.45',
-          image: 'Image_10.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1yCQd_pUjXDFh6gpxN6SD9eE1k39gUeVI'
-        }
-      ]
+      {
+        "Title": "Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout",
+        "Year": "2020",
+        "imdbID": "noid",
+        "Type": "test",
+        "Poster": ""
+      },
+      {
+        "Title": "Star Wars: Episode IV - A New Hope Star Wars: Episode IV - A New Hope ",
+        "Year": "1977",
+        "imdbID": "tt0076759",
+        "Type": "movie",
+        "Poster": "Poster_01.jpg"
+      },
+      {
+        "Title": "Star Wars: Episode V - The Empire Strikes Back",
+        "Year": "1980",
+        "imdbID": "tt0080684",
+        "Type": "movie",
+        "Poster": "Poster_02.jpg"
+      },
+      {
+        "Title": "Star Wars: Episode VI - Return of the Jedi",
+        "Year": "1983",
+        "imdbID": "tt0086190",
+        "Type": "movie",
+        "Poster": "Poster_03.jpg"
+      },
+      {
+        "Title": "Star Wars: Episode VII - The Force Awakens",
+        "Year": "",
+        "imdbID": "tt2488496",
+        "Type": "movie",
+        "Poster": ""
+      },
+      {
+        "Title": "Star Wars: Episode I - The Phantom Menace",
+        "Year": "1999",
+        "imdbID": "tt0120915",
+        "Type": "movie",
+        "Poster": "Poster_05.jpg"
+      },
+      {
+        "Title": "Star Wars: Episode III - Revenge of the Sith",
+        "Year": "2005",
+        "imdbID": "tt0121766",
+        "Type": "movie",
+        "Poster": "Poster_06.jpg"
+      },
+      {
+        "Title": "Star Wars: Episode II - Attack of the Clones",
+        "Year": "2002",
+        "imdbID": "tt0121765",
+        "Type": "movie",
+        "Poster": "Poster_07.jpg"
+      },
+      {
+        "Title": "Star Trek",
+        "Year": "2009",
+        "imdbID": "tt0796366",
+        "Type": "movie",
+        "Poster": "Poster_08.jpg"
+      },
+      {
+        "Title": "Star Wars: Episode VIII - The Last Jedi",
+        "Year": "2017",
+        "imdbID": "tt2527336",
+        "Type": "",
+        "Poster": ""
+      },
+      {
+        "Title": "Rogue One: A Star Wars Story",
+        "Year": "2016",
+        "imdbID": "tt3748528",
+        "Type": "movie",
+        "Poster": "Poster_10.jpg"
+      }
+    ]
   }
 
   handleClickedBook = book => {
@@ -117,15 +106,14 @@ export default class SearchScreen extends React.Component {
   }
 
   handleClickAddForm = () => {
-
     const newBook = {
-      title: this.state.formTitle,
-      subtitle: this.state.formSubtitle,
-      price: this.state.formPrice
+      Title: this.state.formTitle,
+      Type: this.state.formType,
+      Year: this.state.formYear
     }
     const books = this.state.books.concat([newBook])
 
-    this.setState({ books, formTitle: '', formSubtitle: '', formPrice: '' })
+    this.setState({ books, formTitle: '', formType: '', formYear: '' })
     this.setState({ onAdd: false })
   }
 
@@ -136,12 +124,12 @@ export default class SearchScreen extends React.Component {
   RightAction = (book) => {
     // console.log(book)
     this.setState({ books: this.state.books
-          .filter(b => book.title !== b.title) })
+          .filter(b => book.Title !== b.Title) })
   }
 
-  onPriceChanged(formPrice) {
-    if (/^\d*$/.test(formPrice.toString())) {
-      this.setState({ formPrice });
+  onPriceChanged(formYear) {
+    if (/^\d*$/.test(formYear.toString())) {
+      this.setState({ formYear })
     }
   }
 
@@ -177,15 +165,15 @@ export default class SearchScreen extends React.Component {
                         style={styles.input}
                     />
                     <TextInput
-                        value={this.state.formSubtitle}
-                        onChangeText={formSubtitle => this.setState({ formSubtitle })}
-                        placeholder='Subtitle'
+                        value={this.state.formType}
+                        onChangeText={formType => this.setState({ formType })}
+                        placeholder='Type'
                         style={styles.input}
                     />
                     <TextInput
-                        value={this.state.formPrice}
-                        onChangeText={formPrice => this.onPriceChanged(formPrice)}
-                        placeholder='Price'
+                        value={this.state.formYear}
+                        onChangeText={formYear => this.onPriceChanged(formYear)}
+                        placeholder='Year'
                         style={styles.input}
                     />
                     <Button
@@ -221,10 +209,10 @@ export default class SearchScreen extends React.Component {
                         this.state.books
                             .filter(b =>
                                 this.state.filter.length === 0 ||
-                                b.title.toLowerCase().includes(this.state.filter.toLowerCase()))
+                                b.Title.toLowerCase().includes(this.state.filter.toLowerCase()))
                             .map((b) => {
-                              return new Book(b)
-                                  .renderBookPreview(width, this.handleClickedBook, this.RightAction)
+                              return new Movie(b)
+                                  .renderMoviePreview(width, this.handleClickedBook, this.RightAction)
                         })
                       }
                     </ScrollView>
