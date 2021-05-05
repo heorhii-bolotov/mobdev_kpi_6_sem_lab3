@@ -1,238 +1,167 @@
-import { View, Text, StyleSheet, Dimensions, Button, TextInput } from "react-native"
-import {ScrollView, TouchableOpacity} from "react-native-gesture-handler"
-import React, { Component } from "react"
-import { MenuButton, Logo } from "../components/header/header"
+import { View, Text, StyleSheet, Dimensions, TextInput } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
+import React, { useEffect, useState } from "react"
+import { SearchBar } from 'react-native-elements'
+import { Button } from 'react-native-elements'
+import { ActivityIndicator } from 'react-native'
 
 const { width } = Dimensions.get('window')
-import Book from "../models/Book";
+import Book from "../models/Book"
 
 
-export default class SearchScreen extends React.Component {
-  state = {
-    bookDisplay: null,
-    onAdd: false,
-    filter: '',
-    formTitle: '',
-    formSubtitle: '',
-    formPrice: '',
-    books: [
-        {
-          title: 'Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout',
-          subtitle: '',
-          isbn13: 'noid',
-          price: 'Priceless',
-          image: '',
-          uri: ''
-        },
-        {
-          title: 'iOS Components and Frameworks',
-          subtitle: 'Understanding the Advanced Features of the iOS SDK',
-          isbn13: '9780321856715',
-          price: '$23.30',
-          image: 'Image_01.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1LFrwYL7hFvuSoWJSJahcGxO9DBNrRlqo'
-        },
-        {
-          title: 'Learning iOS Development',
-          subtitle: 'A Hands-on Guide to the Fundamentals of iOS Programming',
-          isbn13: '9780321862969',
-          price: '$3.99',
-          image: 'Image_02.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1ePyPpLYvNsAeQASlcuUeMMqRODlDbu4L'
-        },
-        {
-          title: 'Beginning iOS Programming',
-          subtitle: 'Building and Deploying iOS Applications',
-          isbn13: '9781118841471',
-          price: '$6.35',
-          image: 'Image_03.png',
-          uri: 'https://drive.google.com/uc?export=download&id=16i-9TVnF73ovco-phKxBqCtfbtArUckg'
-        },
-        {
-          title: 'Beginning iOS 5 Development',
-          subtitle: 'Exploring the iOS SDK',
-          isbn13: '9781430236054',
-          price: '$3.65',
-          image: '',
-          uri: ''
-        },
-        {
-          title: 'Beginning iOS 5 Games Development',
-          subtitle: 'Using the iOS SDK for iPad, iPhone and iPod touch',
-          isbn13: '9781430237105',
-          price: '$36.31',
-          image: 'Image_05.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1WZ2egkXHNhhYIl7D2zuaZS1VwGrOV2xZ'
-        },
-        {
-          title: 'More iOS 6 Development',
-          subtitle: 'Further Explorations of the iOS SDK',
-          isbn13: '9781430238072',
-          price: '$4.95',
-          image: 'Image_06.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1U4B4USGcGDmPWJ0A3olQy7xtFRiYNeGx'
-        },
-        {
-          title: 'Beginning iOS 6 Development',
-          subtitle: 'Exploring the iOS SDK',
-          isbn13: '9781430245124',
-          price: '$5.34',
-          image: 'Image_07.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1AutN6Pr-7e6bQ57PBhbO5Sr16H14mJCB'
-        },
-        {
-          title: 'Beginning iOS 7 Development',
-          subtitle: 'Exploring the iOS SDK',
-          isbn13: '9781430260226',
-          price: '$3.65',
-          image: 'Image_08.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1xPeKO5xfRo2_LcYk3gmJzwoFbFUYCv2h'
-        },
-        {
-          title: 'Developing iOS Applications with Flex 4.5',
-          subtitle: '',
-          isbn13: '9781449308360',
-          price: '$12.99',
-          image: '',
-          uri: ''
-        },
-        {
-          title: 'iOS 6 Programming Cookbook',
-          subtitle: 'Solutions for iOS Developers',
-          isbn13: '9781449342753',
-          price: '$4.45',
-          image: 'Image_10.png',
-          uri: 'https://drive.google.com/uc?export=download&id=1yCQd_pUjXDFh6gpxN6SD9eE1k39gUeVI'
-        }
-      ]
+export default function SearchScreen() {
+  const [books, setBooks] = useState([])
+  const [bookDisplay, setBookDisplay] = useState(null)
+  const [onAdd, setOnAdd] = useState(null)
+  const [formTitle, setFormTitle] = useState('')
+  const [formSubtitle, setFormSubtitle] = useState('')
+  const [formPrice, setFormPrice] = useState('')
+  const [filter, setFilter] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  useEffect(_ => {
+    const getBooks = async () => {
+      setLoading(true)
+      try {
+        // get books
+        const response = await fetch(`https://api.itbook.store/1.0/search/${filter}`)
+        const { books } = await response.json()
+        setBooks(books)
+        console.log(books)
+      } catch (err) {
+        console.log(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+    console.log(filter)
+    // get books only when search length greater than 3
+    if (filter.length >= 3) {
+      getBooks()
+    } else {
+      setBooks([])
+    }
+  }, [filter])
+
+  const handleClickedBook = book => {
+    setBookDisplay(book)
   }
 
-  handleClickedBook = book => {
-    this.setState({ bookDisplay: book })
+  const handleClickBack = book => {
+    setBookDisplay(null)
+    setOnAdd(false)
   }
 
-  handleClickBack = book => {
-    this.setState({ bookDisplay: null })
-    this.setState({ onAdd: false })
-  }
-
-  handleClickAddForm = () => {
-
+  const handleClickAddForm = () => {
     const newBook = {
-      title: this.state.formTitle,
-      subtitle: this.state.formSubtitle,
-      price: this.state.formPrice
+      title: formTitle,
+      subtitle: formSubtitle,
+      price: formPrice
     }
-    const books = this.state.books.concat([newBook])
-
-    this.setState({ books, formTitle: '', formSubtitle: '', formPrice: '' })
-    this.setState({ onAdd: false })
+    setBooks((prev) => [...prev, newBook])
+    setFormTitle('')
+    setFormPrice('')
+    setFilter('')
+    setOnAdd(false)
   }
 
-  handleClickAdd = () => {
-    this.setState({ onAdd: true })
+  const handleClickAdd = () => {
+    setOnAdd(true)
   }
 
-  RightAction = (book) => {
-    // console.log(book)
-    this.setState({ books: this.state.books
-          .filter(b => book.title !== b.title) })
+  const RightAction = (book) => {
+    setBooks((prev) =>
+        prev.filter(b => book.title !== b.title))
   }
 
-  onPriceChanged(formPrice) {
+  const onPriceChanged = formPrice => {
     if (/^\d*$/.test(formPrice.toString())) {
-      this.setState({ formPrice });
+      setFormPrice(formPrice)
     }
   }
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerLeft: <MenuButton onPress={() => navigation.openDrawer()} />,
-      headerTitle: <Logo />,
-      headerBackTitle: "Search",
-      headerLayoutPreset: "center"
-    }
-  }
-
-  render() {
-    return (
+  return (
       <View style={styles.container}>
         {
-          this.state.bookDisplay !== null ?
+          bookDisplay !== null ?
               <View>
                 <Button
-                    onPress={this.handleClickBack}
+                    onPress={handleClickBack}
                     title="Back" color="#A6A6A6"
                 />
-                { this.state.bookDisplay.renderFullBook(width) }
+                { bookDisplay.renderFullBook(width) }
               </View>
               :
-              this.state.onAdd ?
+              onAdd ?
                   <View>
                     <Text style={styles.inputext}>Add New Book</Text>
                     <TextInput
-                        value={this.state.formTitle}
-                        onChangeText={formTitle => this.setState({ formTitle })}
+                        value={formTitle}
+                        onChangeText={formTitle => setFormTitle(formTitle)}
                         placeholder='Title'
                         style={styles.input}
                     />
                     <TextInput
-                        value={this.state.formSubtitle}
-                        onChangeText={formSubtitle => this.setState({ formSubtitle })}
+                        value={formSubtitle}
+                        onChangeText={formSubtitle => setFormSubtitle(formSubtitle)}
                         placeholder='Subtitle'
                         style={styles.input}
                     />
                     <TextInput
-                        value={this.state.formPrice}
-                        onChangeText={formPrice => this.onPriceChanged(formPrice)}
+                        value={formPrice}
+                        onChangeText={formPrice => onPriceChanged(formPrice)}
                         placeholder='Price'
                         style={styles.input}
                     />
                     <Button
-                        onPress={this.handleClickAddForm}
+                        onPress={handleClickAddForm}
                         title="Add"
-                        color="#A6A6A6"
-                        style={styles.inputbtn}
+                        type='clear'
                     />
                     <Button
-                        onPress={this.handleClickBack}
+                        onPress={handleClickBack}
                         title="Back"
-                        color="#A6A6A6"
-                        style={styles.inputbtn}
+                        type='clear'
                     />
                   </View>
                   :
                   <View>
-                    <View style={{ flexDirection: "row", paddingHorizontal: 30 }}>
-                      <TextInput
-                          onChangeText={text => this.setState({ filter: text })}
-                          placeholder='Search'
-                          defaultValue={this.state.filter}
-                          inlineImageLeft='search_icon'
-                          style={{ flex: 1, color: '#A6A6A6', height: 40 }}/>
-                      <Button
-                          onPress={this.handleClickAdd}
-                          title="Add"
-                          color="#A6A6A6" />
-                    </View>
+                    <View style={{ flexDirection: "row", paddingHorizontal: 30, margin: 5, alignItems: "center"}}>
+                      {loading && <ActivityIndicator  size="large" color="#0000ff" />}
 
+                      <SearchBar placeholder='Search Book'
+                                 searchIcon={{ size: 24 }}
+                                 onChangeText={text => setFilter(text)}
+                                 onClear={_ => setFilter('')}
+                                 value={filter}
+                                 inputStyle={{margin: 0}}
+                                 containerStyle={{borderWidth: 0, borderRadius: 15, width: 200}}
+                                 lightTheme
+                                 round
+                                 platform="android"
+                      />
+                      <Button
+                          onPress={handleClickAdd}
+                          title="Add"
+                          type='clear'
+                      />
+                    </View>
                     <ScrollView>
                       {
-                        this.state.books
+                        books.length > 0 && books
                             .filter(b =>
-                                this.state.filter.length === 0 ||
-                                b.title.toLowerCase().includes(this.state.filter.toLowerCase()))
+                                filter.length === 0 ||
+                                b.title.toLowerCase().includes(filter.toLowerCase()))
                             .map((b) => {
                               return new Book(b)
-                                  .renderBookPreview(width, this.handleClickedBook, this.RightAction)
-                        })
+                                  .renderBookPreview(width, handleClickedBook, RightAction)
+                            })
                       }
                     </ScrollView>
                   </View>
         }
       </View>
-    );
-  }
+  )
 }
 
 const styles = StyleSheet.create({
@@ -246,8 +175,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 44,
     padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
     marginBottom: 10,
   },
   inputext: {
@@ -256,8 +183,6 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign:'center',
     fontWeight:'bold',
-    borderWidth: 1,
-    borderColor: 'black',
     marginBottom: 10,
   },
   inputbtn: {

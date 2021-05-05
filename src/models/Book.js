@@ -1,28 +1,22 @@
 import React from "react"
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from "react-native"
-import BookExports from "./BookExports"
-import {TouchableWithoutFeedback, Swipeable, ScrollView} from "react-native-gesture-handler"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import AutoHeightImage from 'react-native-auto-height-image'
 
 const { width } = Dimensions.get("window")
 
 class Book {
-    constructor({ title, subtitle, isbn13, price, image, uri }) {
+    constructor({ title, subtitle, isbn13, price, image, url }) {
         this.title = title
         this.subtitle = subtitle
         this.isbn13 = isbn13
         this.price = price
         this.image = image
-        this.uri = uri
-    }
-    findBookImage = () => {
-        if (this.image && BookExports[this.image.split(".png")[0]]) {
-            return BookExports[this.image.split(".png")[0]]
-        } else {
-            return false
-        }
+        this.uri = url
+        console.log(image)
     }
 
-    renderFullBook = (windowWidth) => {
+    renderFullBook = windowWidth => {
         const styles = StyleSheet.create({
             container: {
                 flex: 1,
@@ -45,9 +39,10 @@ class Book {
         })
         return (
             <View style={styles.container}>
-                    {this.findBookImage() ? (
-                        <Image
-                            source={this.findBookImage()}
+                    {
+                        this.image ? (
+                        <AutoHeightImage
+                            source={{ uri: this.image }}
                             style={styles.images}
                             width="40"
                         />
@@ -100,9 +95,9 @@ class Book {
                 <View style={styles.container}>
                     <View style={styles.col1}>
                         <TouchableWithoutFeedback onPress={() => handleClickedBook(this)}>
-                            {this.findBookImage() ? (
+                            {this.image ? (
                                 <Image
-                                    source={this.findBookImage()}
+                                    source={{ uri: this.image}}
                                     style={styles.images}
                                     width="40"
                                 />
