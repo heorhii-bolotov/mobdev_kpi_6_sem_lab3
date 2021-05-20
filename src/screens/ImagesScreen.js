@@ -1,10 +1,9 @@
-import { View, Text, StyleSheet, Alert, Dimensions } from "react-native";
-import React, {Component, useEffect, useState} from "react";
+import { View, StyleSheet, Dimensions } from "react-native"
+import React, {useEffect, useState} from "react"
 import { ActivityIndicator } from 'react-native'
-import * as ImagePicker from 'expo-image-picker';
-import { TouchableWithoutFeedback, ScrollView } from 'react-native-gesture-handler'
-import { ImageComponent } from "../components/images/Img";
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { ScrollView } from 'react-native-gesture-handler'
+import { ImageComponent } from "../components/images/Img"
+import ImageStorage from "../coredata/ImageStorage"
 
 const second = Dimensions.get('window').width / 5
 const first = (Dimensions.get('window').width / 5) * 3
@@ -21,8 +20,15 @@ export default function ImagesScreen() {
                 const REQUEST = 'red+cars',
                     COUNT = 21,
                     API_KEY = '19193969-87191e5db266905fe8936d565'
-                const response = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=${REQUEST}&image_type=photo&per_page=${COUNT}`)
-                const { hits } = await response.json()
+                let hits
+
+                hits = await ImageStorage.getData('Images')
+                console.log(hits)
+                if (hits === null) {
+                    const response = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=${REQUEST}&image_type=photo&per_page=${COUNT}`)
+                    const { hits } = await response.json()
+                    await ImageStorage.storeData('Images', hits)
+                }
                 hits.map(image => {
                     console.log(image)
                     image = {localUri: image.userImageURL}
@@ -45,30 +51,6 @@ export default function ImagesScreen() {
     }
 
     useEffect(fetchImages,[])
-
-    // const openImagePickerAsync = async () => {
-    //     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    //     if (permissionResult.granted === false) {
-    //         alert('Permission to access camera roll is required!');
-    //         return;
-    //     }
-    //     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    //     if (pickerResult.cancelled === true) {
-    //         return;
-    //     }
-    //     return { localUri: pickerResult.uri }
-    // };
-
-    // const pick = async _ => {
-    //     openImagePickerAsync().then((image) => {
-    //         // set images
-    //         setImages((prevImg) => {
-    //             if (prevImg.column === 'right') { return { ...prevImg, column: 'left', left: [...prevImg.left, image] }}
-    //             else if ((prevImg.column === 'left' && (prevImg.left.length + prevImg.center.length + prevImg.right.length + 1) % 7 !== 2) || prevImg.column === 'center') { return { ...prevImg, column: 'right', right: [...prevImg.right, image] } }
-    //             return { ...prevImg, column: 'center', center: [...prevImg.center, image] }
-    //         })
-    //     }).catch(() => console.log("Alert"))
-    // }
 
     return (
         <View contentContainerStyle={styles.container}>

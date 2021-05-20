@@ -7,7 +7,7 @@ import { ActivityIndicator } from 'react-native'
 
 const { width } = Dimensions.get('window')
 import Book from "../models/Book"
-
+import BookStorage from "../coredata/BookStorage"
 
 export default function SearchScreen() {
   const [books, setBooks] = useState([])
@@ -25,10 +25,17 @@ export default function SearchScreen() {
       try {
         // get books
         const response = await fetch(`https://api.itbook.store/1.0/search/${filter}`)
-        const { books } = await response.json()
+        let { books } = await response.json()
+
+        await BookStorage.storeData(filter, books)
         setBooks(books)
         console.log(books)
       } catch (err) {
+
+        const books = await BookStorage.getData(filter)
+        if (books === null) console.log('empty book storage and failed request')
+        else setBooks(books)
+
         console.log(err.message)
       } finally {
         setLoading(false)
